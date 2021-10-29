@@ -1,87 +1,28 @@
-import  React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
-import SearchBox from './components/SearchBox';
-// importando de da pasta Components
-
-
-//usando props para usar propriedades
-
+import React, { useState } from "react";
+import Modal from "./components/Modal";
 
 
 function App() {
 
-  const [searchText, setSearchText] = useState('');
+  // essa const que tem um array com os parametros do modal nesse momento ele está com false
+  const [modalVisible, setModalVisible] = useState(false);
 
-  // criando const de listas
-  const [list, setList] = useState([]);
-
-  useEffect(()=>{
-
-    // Array com 3 objetos  / done signica feito ou não feito
-    setList([
-      {title:'comprar o bolo', done:false},
-      {title:'batata', done:true},
-      {title:'comprar leite', done:false}
-
-    ]);
-
-
-  }, []);
-
-
-  function addAction(newItem) {
-    //atribui valor
-    let newList = [ ...list];
-    newList.push( {title:newItem, done:false} );
-    setList(newList);
+  // recebe a propriedade do botao e ao clicar ele abre o modal
+  const handleButtonClick = () => {
+    setModalVisible(true);
   }
 
-// marcando item como feito
-  function hangleToggleDone(index) {
-    // cria um array com uma nova lista
-    let newList = [ ...list ];
-    // inverte o valor da lista de true para false
-    newList[index].done = !newList[index].done;
-    // salva a nova lista
-    setList(newList);
-  }
-
-
-
-  return (
+  return(
     <>
-      <h1>Lista de Trabalho!</h1>
+    {/* abre modal ao clicar no botao */}
+      <button onClick={handleButtonClick}>Abrir Modal</button>
 
-      <SearchBox
-        frasePadrao="Adicione na lista"
-        onEnter={addAction}
-      />
-
-      <hr/>
-
-    {/* para exibir um lista com react se usa o .map */}
-    <ul>
-      {list.map((item, index)=>(
-        <li key={index} onClick={()=>hangleToggleDone(index)}>
-          {item.done &&
-            <del>{item.title}</del>
-          }
-          {!item.done &&
-            item.title
-          }
-        </li>
-      ))}
-    </ul>
-
-
+    {/* modal visivel e não visivel */}
+     <Modal visible={modalVisible} setVisible={setModalVisible}>
+        <h1>testando 1,2,3...</h1>
+      </Modal>
     </>
   );
-
-
 }
-
-
-
-
 
 export default App;
